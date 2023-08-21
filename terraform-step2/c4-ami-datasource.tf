@@ -35,3 +35,20 @@ data "aws_availability_zones" "us-east-1" {
   }
   
 }
+
+# adding datasource to dynamically select only those availability zones which have the instance types provided inb values of instance_type filter below
+# Note that t3.micro is not available in us-east-1e so this AZ should be leminated from the result
+# The below snippet and attributes can be refered from documentation
+data "aws_ec2_instance_type_offerings" "my_ins_type" {
+  for_each = toset(data.aws_availability_zones.us-east-1.names)
+  filter {
+    name   = "instance-type"
+    values = var.instance_type_list
+  }
+  filter {
+    name   = "location"
+    values = [each.key]
+  }
+  location_type = "availability-zone"
+}
+
