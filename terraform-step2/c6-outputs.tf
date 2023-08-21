@@ -18,7 +18,7 @@ output "for_loop_map" {
 }
 
 # output - for loop with map - advanced
-output "for_loop_map" {
+output "for_loop_map_advanced" {
   description = "for loop with map"
   # below line works like:-   value = for x in list : print  count_index_as_key => x.instace_publicdns
   # note the count index here has nothing to with count argumrent of instance. it is in genral index of the loop. 
@@ -28,14 +28,14 @@ output "for_loop_map" {
 
 
 # output - legacy splat operator
-output "splat_operator_output" {
+output "splat_operator_output_legacy" {
   description = "lecagy splat operator"
   value = aws_instance.myec2vm.*.public_dns
   
 }
 
 # output - latest splat operator, this uses the count argumrnt of the instance
-output "splat_operator_output" {
+output "splat_operator_output_latest" {
   description = "latest splat operator"
   value = aws_instance.myec2vm[*].public_dns
   
