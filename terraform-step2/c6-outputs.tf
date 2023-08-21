@@ -9,6 +9,14 @@ output "for_loop_list" {
   
 }
 
+# output - for loop with  for_each
+output "for_loop_map_with_for_each" {
+  description = "for loop with map"
+  # below line works like:-   value = for x in list : print  any_of_the_instance_arguments_can_be _used_as_key => x.instace_publicdns
+  value = { for az, instance in aws_instance.myec2vm : az => instance.public_dns }
+  
+}
+
 # output - for loop with map
 output "for_loop_map" {
   description = "for loop with map"
@@ -27,11 +35,12 @@ output "for_loop_map_advanced" {
 }
 
 
-# output - legacy splat operator
-output "splat_operator_output_legacy" {
-  description = "lecagy splat operator"
-  value = aws_instance.myec2vm.*.public_dns
-}
+# output - legacy splat operator 
+# Note that this works only with count and not with for_each as its not a list but a map or set of strings
+# output "splat_operator_output_legacy" {
+#   description = "lecagy splat operator"
+#   value = aws_instance.myec2vm.*.public_dns
+# }
 
 # output - latest splat operator, this uses the count argumrnt of the instance
 output "splat_operator_output_latest" {
